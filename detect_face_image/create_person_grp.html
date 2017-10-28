@@ -59,21 +59,21 @@
                             },
                             type: "POST",
                             // Request body
-                            data: '{"name":"fuckyou"}',
+                            data: '{"name":"fuckyou2"}',
                         })
                         .done(function(data) {
                             alert("success in creating a person");
                             $("#responseTextArea").val(JSON.stringify(data, null, 2));
-                            alert(data['name'][0].toString());
+                            //add the face
+                           // alert(data['personId']);
                                 $(function() {
                                     var params = {
                                         // Request parameters
                                         "personGroupId": personGroupId,
-                                        "personId": "",
-                                        "userData": "",
+                                        "personId": data['personId'],
                                         };
                                 $.ajax({
-                                    url: "https://westus.api.cognitive.microsoft.com/face/v1.0/persongroups/" + personGroupId + "/persons",
+                                    url: "https://westus.api.cognitive.microsoft.com/face/v1.0/persongroups/" + personGroupId + "/persons/" + data['personId'] + "/persistedFaces/" ,
                                     beforeSend: function(xhrObj){
                                         // Request headers
                                         xhrObj.setRequestHeader("Content-Type","application/json");
@@ -81,24 +81,24 @@
                                     },
                                     type: "POST",
                                     // Request body
-                                    data: '{personGroupId:' + personGroupId + '}',
+                                    data: JSON.stringify({url:"http://movies.bizhat.com/news/img/ar_rahman.jpg"}),
                             })
-                            .done(function(data) {
-                                alert("success in creating a person");
-                                $("#responseTextArea").val(JSON.stringify(data, null, 2));
-                                
-                                
-                            })
-                            .fail(function() {
-                                alert("error");
-                            });                   
+                                .done(function(data) {
+                                    alert("success in creating a face id");
+                                    $("#responseTextArea").val(JSON.stringify(data, null, 2));
+                                    data['persistedFaceId'];
+                                    
+                                })
+                                .fail(function() {
+                                    alert("error");
+                                });                   
                         })
-                        .fail(function() {
-                            alert("error");
-                        });
-            
-                    });
+                      //  .fail(function() {
+                      //      alert("error");
+                      //      });
                     })
+                    });
+                    
                 })
                 .fail(function() {
                     alert("error got");
